@@ -1,0 +1,34 @@
+## Arrays
+ - One chunk of memory that's equally divided
+ - Core language feature; don't have to reference outside framework/library to create array
+ - Key feature: O(1) access to read/write (just need to know number to access any element's value in array)
+   - Formula: arr_address + (element_size_in_memory * (index - first_index)) => location of any element
+ - Flexibility: constraints on size, type of elements within array will keep overhead down. Flexibility will introduce additional overhead and potentially performance/memory tradeoffs compared to a constrained array.
+ - Multi-dimensional arrays: O(n) access.
+   - array_add + element_size[(curr_row_ind - first_row_ind) * # of elements per row + (curr_col_index - first_col_ind)] => element_address
+   - col-major vs row-major ordering
+ - Linear Array time complexities for common ops:
+   - beginning: add (O(n)), remove (O(n))
+   - end: add (O(1)), remove (O(1))
+   - middle: add (O(n)), remove (O(n))
+ - Since array = object, need variable to reference array object in order to manipulate/do things
+ - Sieve of Erathosthenes
+   - start with 2, work until n ^ (1/2) (square root of n) and cross off all #'s < n divisible by i as not prime.
+ - Multi-dimensional arrays (AKA Matrix/Table):
+   - 2-D array: Pascal's Triangle
+   - 3-D Array: Array of Arrays of Arrays (weather[1][2][3])
+     - additional dimensions: think of cell phone bill...just wrapping more arrays in arrays of arrays...etc
+ - Dynamic arrays (not really applicable to JS? All arrays are already dynamic)
+   - static arrays of static size are...static
+   - solution? initialize a pointer to an array, and initialize new array + copy over new array over old so pointer 
+     refers to new array
+   - Methods: 
+     - Get(i): get element at index i
+     - Set(i, val)
+     - PushBack(val): like push...add to end of array
+     - Remove(i): remove element at idx i
+     - Size(): get size of array
+ - Jagged Array (array of arrays):
+   - like a 2D array, but can have varying row sizes unlike traditional 2D Array
+ - Resizable Array (already a feature of arrays in JS)
+
