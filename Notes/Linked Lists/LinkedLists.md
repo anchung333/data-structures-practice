@@ -1,0 +1,43 @@
+## Linked Lists
+ - Disadvantages of array-based lists:
+   - array.unshift: O(n) operation 
+   - some languages: a rrays have fixed length
+ - Singly-Linked Lists
+   - Like links in a chain
+   - head pointer that points to another node, that points to another node...until finally reaching a node that doesn't point to another node (tail)
+   - Each node contains a key (for some value), and pointer to next node (stores copy of value of reference to next node in the node's .next property)
+   - Tail contains null for pointer to next node (.next = null) 
+   - ***Reminder***
+    - ex: next = new Node(value, next); //this is ok since we're evaluating the expression on the right, so the next argument passed in is the current Node's current/'old' next Node, and after evaluating the value we assign it to the 'new' next reference. 
+   - Operations:
+     - unshift (create new node, have it point at node it goes before, update head to point at new node ): O(1)
+     - shift (update head of node to point at second (now new first) node, (and then perhaps optionally delete the node?)): O(1)
+     - push (create new node, then start at head and go all the way down to previous tail, and point it to new tail): O(n)
+       - if tail pointer exists: O(1)
+     - pop (start at head, go all the way down to the second to last node, reassign pointer to next node as null, then perhaps delete old tail): O(n)
+       - if tail pointer exists...still O(n) since we don't have 'reverse pointers' to go 'back' on a linked list...would have to do exact same way as if we didn't have a tail pointer, then update tail pointer to new tail
+     - splice (add new node after an existing node by updating next to point to new node, and have the new node's next point to the previous 'next' node): O(1)
+   - when performing operations, possible to add check on head and tail to make sure they are not null (ie an empty linked list )
+   - anything involving having to find/reference node before a node will be an O(n) operation for a singly-linked list
+   - Disadvantages of linked lists: 
+     - Finding nth item of linked list is O(n), as opposed to O(1) for arrays
+ - Why have private methods?
+   - prevent data corruption (not make these methods accessible by code written by other people)
+   - decrease dependencies to keep implementation changes easy
+ - Interface of a class: 
+   - prototypes for public methods, plus descriptions of behaviors
+ - Abstract Data Types (ADT): 
+   - class/classes that have well-defined methods but implementation details are hidden from other classes (to maintain flexibility of implementing and don't have dependencies)
+   - Invariant: fact about data structure that's always true
+   - Having a singly-linked list class can enforce invariants and enforce good programming practices (no circularly-linked lists, strict value definitions)
+ - Doubly-Linked Lists:
+   - Node has references to both previous and next nodes in the list
+     - head's prev reference would be null
+   - inserting and deleting items from list becomes O(1)
+   - Sentinel: special node that doesn't represent an item
+     - 'allows' for a circular linked list to exist as sentinel's next will point to head node, and prev will point to tail node (value/item is null)
+     - no null next fields...tail.next will point to sentinel, which will have its next to head...then we back
+     - sentinel does not count towards size as it is not store/point to a value
+     - hidden part of doubly-linked list 
+     - empty list: sentinel's next and prev point to itself 
+
