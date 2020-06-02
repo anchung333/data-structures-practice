@@ -1,9 +1,11 @@
 ## Linked Lists
  - Disadvantages of array-based lists:
-   - array.unshift: O(n) operation 
+   - array.unshift: O(n) operation...same with deleting/shifting elements. as opposed to linked lists where deleting nodes just requires fiddling around with some object references (O(1) operation)
    - some languages: a rrays have fixed length
+ - Array's strengths: reading/accessing elements (continguous in memory, O(1) operation for all elemements)
  - Singly-Linked Lists
    - Like links in a chain
+   - unlike arrays, pieces are not contiguously stored in memory (not next to each other), so need to know where all the pieces are in memory
    - head pointer that points to another node, that points to another node...until finally reaching a node that doesn't point to another node (tail)
    - Each node contains a key (for some value), and pointer to next node (stores copy of value of reference to next node in the node's .next property)
    - Tail contains null for pointer to next node (.next = null) 
@@ -40,4 +42,11 @@
      - sentinel does not count towards size as it is not store/point to a value
      - hidden part of doubly-linked list 
      - empty list: sentinel's next and prev point to itself 
-
+  - But don't use linked lists? (According to Bjourne Stroustrup)
+     - Linked lists not as compact as arrays
+     - caches are really good at shoving elements over by 1 for persay a shift/unshift operation, and actually array will be better than list for inserting/deleting
+     - array access much more predictable than list node access (pointing to one space here, one space in memory there...ends up being random) which will lead to cache misses, which slows speed of operations
+     - lists have to store both the data and the pointers prev/next, so will often be larger than arrays
+     - can have 50x, 100x slower performance when doing linear search to get to insertion point vs arrays
+     - these differences in performance will show up even in small individual data structures
+     - BASICALLY: it's about memory locality...no gaps in array since they're all stored contiguously, as opposed to each node being separately allocated in a linked list
