@@ -134,17 +134,22 @@ class myLinkedList {
   }
 
   reverse() {
-    let n = 0;
-    let size = this.size();
-    let reversedList = new myLinkedList();
-    let reversedCurrNode = reversedList.head;
-    reversedList.head = new Node(this.valueNFromEnd(n));
-    while (n < size - 1) {
-      n++;
-      reversedCurrNode.next = new Node(this.valueNFromEnd(n));
-      reversedCurrNode = reversedCurrNode.next;
+    //store references to current, prev, and next
+    // 1 -> 2 -> 3 -> 4 -> 5
+    // 2 -> 1 -> 3 -> 4 -> 5
+    //swap first 2
+    let second = this.head.next;
+    this.head.next = this.head.next.next;
+    second.next = this.head;
+    this.head = second;
+    let current = this.head.next;
+    while (current.next !== null) {
+      let prev = this.head;
+      let twoAhead = current.next.next;
+      current.next.next = prev;
+      this.head = current.next;
+      current.next = twoAhead;
     }
-    this = reversedList;
   }
 
   removeValue(value) {

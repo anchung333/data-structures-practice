@@ -50,3 +50,7 @@
      - can have 50x, 100x slower performance when doing linear search to get to insertion point vs arrays
      - these differences in performance will show up even in small individual data structures
      - BASICALLY: it's about memory locality...no gaps in array since they're all stored contiguously, as opposed to each node being separately allocated in a linked list
+  - Doubly-linked list
+    - let's add a way to reference previous node
+    - head would have a prev node pointer of null 
+    - popping (deleting last element + updating tail) would now be O(1) operation
