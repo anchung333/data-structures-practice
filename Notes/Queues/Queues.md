@@ -1,0 +1,18 @@
+## Queues
+  - First In, First Out (FIFO): front always first one out, others shifted towards front by 1; taking out elements in the order they were submitted. Add into the back, take out from the front. 
+  - Don't worry about how it's implemented...worry about the abstract data structure.
+  - Implementation with linked list:
+    - adding new nodes means adding to the end of the linked list...updating the tail every time
+    - 'dequeuing' means removing starting from the head...a 'shift'
+  - Implementation with arrays:
+    - need to keep both enqueuing and dequeuing O(1) operations...for dequeuing/shifting that's a problem
+    - solution: keep track of a read and a write index. after every push, update write index to +1 (for pre-allocated arrays) [basically a circular array]
+      - for dequeuing, start at index 0, and after every dequeue update read index to index +1.
+      - after write index hits pre-allocated length limit, wrap it back around to index 0.   
+      - write and read indexes can't overlap...must always have buffer of at least one element
+  - In JS for an array queue...seems to just use array.shift() for dequeuing. 
+  - Priority Queues: 
+    - items with same queue priority/number. will follow normal queue behavior (FIFO).
+    - but if item with higher priority (could be a lower number) will be moved to the front of the queue and thus dequeued first.
+  - Deque (deck): 
+    - double-ended queue; like having a stack and queue at the same time
