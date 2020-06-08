@@ -147,6 +147,9 @@ class myHashTable {
       return [index, trial];
     } else {
       while (this.table[index] !== undefined) {
+        if (this.table[index][0] === key) {
+          return index;
+        }
         trial++;
         index = this.hash(key*trial);
       }
