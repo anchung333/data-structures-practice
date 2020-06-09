@@ -1,0 +1,20 @@
+## Trees
+  - strengths:
+    - Dynamic data structures: easy to add/remove additional data
+    - structure conveys information: following a path gives information about the tree's structure
+  - heap = root is most important node. 
+  - recursive definition: tree is either empty, or has a key, and has children which are also trees
+    - optional: parent pointer
+  - binary tree: left, right child keys, optional parent key. 
+  - descendents of a tree include children of children of children, etc. 
+  - siblings: nodes that share the same parent
+  - leaf: node that has no children
+  - forest: collection of trees
+  - depth-first: traverse all the way down one sub-tree to a leaf before exploring sibling
+    - inOrderTraversal: would print left-most leaf, then print its parent, then print its right sibling. (for a BST)
+    - preOrderTraversal: visit node itself, print node, then visit left, then right
+    - postOrderTraversal: just print node itself last, but otherwise similar to preOrderTraversal
+    - utilizes a stack
+  - breadth-first: traverse all nodes of height/level n before going to next level
+    - utilizes a queue
+    - LevelTraversal: visit node, enqueue its children, then visit children, doing the same until leaves are reached

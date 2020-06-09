@@ -1,0 +1,59 @@
+## Hash tables
+  - Dictionary: ADT 
+  - being able to boil down compllicated information to a simpple value/integer, then use that integer to get to a location in memory is quite useful
+  - can't 'reverse' hash - can't take a hashed value and convert it back to the original information (collisions - some information generate the same hash)
+  - hash function: can use mod operator to always produce something within bounds of array size
+    - for strings: can add ASCII representations of each character then mod the sum
+  - operations:
+    - insert(item): will overwrite any existing key
+    - delete(item)
+    - search(key): an exact search of item with given key...turns up error/-1 if not found
+      - take in key and run it through the hash function like an insert, and immediately be able to go to the index using the hashed value. no linear search, no traversal needed!
+  - array implementation:
+    - index is the key
+      - pass in key as first argument...table will plug in key into hash function and spit out an integer that is within the bounds of the pre-allocated array
+    - cons of simply storing array: 
+       1. keys may not always be non-negative integer
+       2. pre-allocated arrays: memory hog for keys that aren't used
+    - solutions: 
+       1. pre-hashing: maps keys to non-negative integers
+         - ideally only hash(x) = hash(y) if x = y (hash functions should be deterministic)
+           - reverse should not necessarily be true...enter collisions.
+       2. hashing: reduce universe of keys into manageable size for a table
+         - but what about collisions? inevitably will have lots of items to hash and sometimes different items will hash to same key (collision)
+           - Chaining: if multiple items, simply store them as a list (can be linked list/[I guess array for JS since arrays can be dynamic]).
+            - will have to travere list when encountering these chained slots, but since usually these slots that have a linked list/array have a small-ish number of items in that slot/bucket, not super adverse in terms of performance 
+         - simple uniform hashing: simple uniform choice in terms of what key an item is hashed to...every key has equal random chance to be hashed to.k
+    - open addressing: 
+      - no pointers!
+      - assume m (number of slots in hash table) >= n (number of elements)...one element per slot
+      - linear probing: 
+        - if hash insertion fails, try to recompute different hash and keep probing until find an empty slot
+        - hash function will specify order of slots to probe for
+        - hash function will have 2 arguments: the key we want to insert, and an integer signifying the trial# (probing attempt#)...will return a slot number to insert into
+        - searching for a key: keep probing until slot's key matches the search input or slot is empty (means all the filled slots' keys don't match since you will be using the same probe/hash sequences generated as if you were trying to insert)
+        - deletion: can't just delete key and replace the slot with null/none...because what if another probing sequence had that previously filled slot in an earlier trial/attempt? a search would return a false negative that the value is not in the table
+          - have a different flag for a deleted item
+          - thus search would be modified to pass over this new different flag which would signify value to be deleted (which is !== null/empty/none)
+          - but insert treats this new flag as the same as none, and overwrites the key with the flag of 'to be deleted'
+      - probing strategies: 
+        - linear probing: potential problem can be clustering
+  - load factor: n/m (expected length of chain if there are n keys and m slots in table...each key has equal chance of getting to a slot....so (1/m) * n keys)
+    - as long as this is constant, operations will be O(1 + chain length) in worst case.
+  - Table doubling: 
+    - if load factor becomes very large, expected O(1 + chain length) grows...can't have slower operations.
+    - start with an m (power of 2?)...8, then grow and shrink table as necessary
+    - would need a new hash function as continued use of current hash function would simply continue to load the top of the new table (pre-grown portion)
+    - what size to grow m/table? not m+1, because after every insertion after n, would have to re-build...not very time efficient.
+      - ideal: double table size after filling table. 
+    - shrinking: instead of reducing by half (which would be O(n) for inserting one more item...have 8 items, insert 1, have to double table to 16...delete 1, then have to shrink to 8...that would be very slow)
+      - perhaps only shrink table size by half when m/4 is achieved...table is only 1/4 full. so re-growing a shrunken table would take a significant amount of operations relative to current items in table.
+  - supporting hashing:
+    - Java, C++, Python all have hash methods native to Object class...so don't worry too much about having to write own hash functions
+    - hashes for these languages calculated usually based on address in memory 
+  - phone book problem: 
+    - features: add + delete contacts, look up people by phone number, look up phone numbers by name
+    - will need 2 hash tables: one to convert phone numbers, one to convert names
+      - hash tables by phone number: array of size 10^N (N = max length phone number), in order to store every single phone input without collisions...each bucket will have the name
+      - hashing function will simply take out anything other than digits in the input phone number, and convert the result to an integer, giving us the index of that phone number.
+      - problem: this is not very memory efficient...O(10^N) space complexity. 

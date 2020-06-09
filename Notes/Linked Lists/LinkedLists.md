@@ -1,0 +1,56 @@
+## Linked Lists
+ - Disadvantages of array-based lists:
+   - array.unshift: O(n) operation...same with deleting/shifting elements. as opposed to linked lists where deleting nodes just requires fiddling around with some object references (O(1) operation)
+   - some languages: a rrays have fixed length
+ - Array's strengths: reading/accessing elements (continguous in memory, O(1) operation for all elemements)
+ - Singly-Linked Lists
+   - Like links in a chain
+   - unlike arrays, pieces are not contiguously stored in memory (not next to each other), so need to know where all the pieces are in memory
+   - head pointer that points to another node, that points to another node...until finally reaching a node that doesn't point to another node (tail)
+   - Each node contains a key (for some value), and pointer to next node (stores copy of value of reference to next node in the node's .next property)
+   - Tail contains null for pointer to next node (.next = null) 
+   - ***Reminder***
+    - ex: next = new Node(value, next); //this is ok since we're evaluating the expression on the right, so the next argument passed in is the current Node's current/'old' next Node, and after evaluating the value we assign it to the 'new' next reference. 
+   - Operations:
+     - unshift (create new node, have it point at node it goes before, update head to point at new node ): O(1)
+     - shift (update head of node to point at second (now new first) node, (and then perhaps optionally delete the node?)): O(1)
+     - push (create new node, then start at head and go all the way down to previous tail, and point it to new tail): O(n)
+       - if tail pointer exists: O(1)
+     - pop (start at head, go all the way down to the second to last node, reassign pointer to next node as null, then perhaps delete old tail): O(n)
+       - if tail pointer exists...still O(n) since we don't have 'reverse pointers' to go 'back' on a linked list...would have to do exact same way as if we didn't have a tail pointer, then update tail pointer to new tail
+     - splice (add new node after an existing node by updating next to point to new node, and have the new node's next point to the previous 'next' node): O(1)
+   - when performing operations, possible to add check on head and tail to make sure they are not null (ie an empty linked list )
+   - anything involving having to find/reference node before a node will be an O(n) operation for a singly-linked list
+   - Disadvantages of linked lists: 
+     - Finding nth item of linked list is O(n), as opposed to O(1) for arrays
+ - Why have private methods?
+   - prevent data corruption (not make these methods accessible by code written by other people)
+   - decrease dependencies to keep implementation changes easy
+ - Interface of a class: 
+   - prototypes for public methods, plus descriptions of behaviors
+ - Abstract Data Types (ADT): 
+   - class/classes that have well-defined methods but implementation details are hidden from other classes (to maintain flexibility of implementing and don't have dependencies)
+   - Invariant: fact about data structure that's always true
+   - Having a singly-linked list class can enforce invariants and enforce good programming practices (no circularly-linked lists, strict value definitions)
+ - Doubly-Linked Lists:
+   - Node has references to both previous and next nodes in the list
+     - head's prev reference would be null
+   - inserting and deleting items from list becomes O(1)
+   - Sentinel: special node that doesn't represent an item
+     - 'allows' for a circular linked list to exist as sentinel's next will point to head node, and prev will point to tail node (value/item is null)
+     - no null next fields...tail.next will point to sentinel, which will have its next to head...then we back
+     - sentinel does not count towards size as it is not store/point to a value
+     - hidden part of doubly-linked list 
+     - empty list: sentinel's next and prev point to itself 
+  - But don't use linked lists? (According to Bjourne Stroustrup)
+     - Linked lists not as compact as arrays
+     - caches are really good at shoving elements over by 1 for persay a shift/unshift operation, and actually array will be better than list for inserting/deleting
+     - array access much more predictable than list node access (pointing to one space here, one space in memory there...ends up being random) which will lead to cache misses, which slows speed of operations
+     - lists have to store both the data and the pointers prev/next, so will often be larger than arrays
+     - can have 50x, 100x slower performance when doing linear search to get to insertion point vs arrays
+     - these differences in performance will show up even in small individual data structures
+     - BASICALLY: it's about memory locality...no gaps in array since they're all stored contiguously, as opposed to each node being separately allocated in a linked list
+  - Doubly-linked list
+    - let's add a way to reference previous node
+    - head would have a prev node pointer of null 
+    - popping (deleting last element + updating tail) would now be O(1) operation
