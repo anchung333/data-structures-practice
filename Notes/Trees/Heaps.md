@@ -1,10 +1,11 @@
 ## Heaps / Priority Queue / Binary Heaps
   - Priority Queues: 
-    - Just have bag of elements that each have priority, not as structured visually as a regular queue (no beginning, no end)
+    - Just have bag of elements that each have priority key, not as structured visually as a regular queue (no beginning, no end)
     - extracting from this bag involves pulling out element(s) whose priority are maximum
-    - 2 operations: inserting with priority p, and extracting element with max priority
+    - Operations: inserting with priority p, extracting element with max priority (removing from the set), and returning the max 
   - Heaps: 
-    - tree that fulfills heap property: 
+    - array visualized as tree that fulfills heap property: 
+      - root of tree is first element (i = 1)
       - max heap: parent will be > child in value 
       - min heap: parent < child in value
     - Binary heap: 
@@ -31,14 +32,24 @@
       - complete if all levels are filled except for last level, which must be filled from left to right
       - advantages:
         - lower heights from filled trees means binary heap operations will be faster. with n nodes we can have O(log n) operations
-        - can store as array:
+        - can store as array (first element i = 1, not 0):
+          - root = first element
           - parent(i): Math.floor(i/2)
           - child(i): 2i, 2i + 1 
       - costs of advantages: 
         - have to keep tree complete/filled. 2 operations modify shape of tree: extractMax() and insert()
         - insert(): insert in leftmost vacant position on last level and let it sift up
         - extractMax(): extract/swap root with last leaf on last level (right-most leaf)
+      - additional notes: 
+        - elements n/2 + 1 ... n are leaves...they will not need to be sorted. can start heapifying/sifting for elements up until then. 
+        - heapifying array: O(n log n)
+          - as you work your way up the levels, there may be more operations involved as you may have to continually sift down, but there will be fewer nodes to work with. 
     - Heap sort: 
       - sort using extractMax() in a priority queue that is filled from an unsorted array
       - disadvantage: not in-place...have to store priority queue
-        - solution: repair tree bottom up until root is reached.
+        - solution: repair tree bottom up until root is reached
+    - constructing heap: 
+      - walk backwards from last node that is before the leaf level to root.
+      - at each step, bubble down the node to its appropriate spot. 
+      - bubble down root
+      - O(n) running time
