@@ -32,11 +32,33 @@ class GraphMatrix {
       }
     }
     traverse(0);
-    console.log(print);
+    return print;
   }
 
   DFSIterative() {
-
+    let print = [];
+    let traverse = (x) => {
+      let stack = [];
+      stack.push([x,x]);
+      //has to be while loop here that has as long as stack !== empty
+      while (stack.length !== 0) {
+        let top = stack.pop();
+        let x = top[0];
+        let y = top[1];
+        print.push(x+1);
+        if (this.graph[x][y] < 2) {
+          if (this.graph[x][y] === 1) {
+            this.graph[y][x] += 2;
+            stack.push([y,x]);
+          }
+          this.graph[x][y] += 2;
+        }
+      }
+    }
+    for (let i = 0; i < this.graph.length; i++) {
+      traverse(i);
+    }
+    return print;
   }
 }
 
@@ -51,7 +73,8 @@ graph1.addEdge(1,5);
 graph1.addEdge(5,1);
 graph1.addEdge(5,6);
 graph1.addEdge(6,5);
-graph1.DFSRecursive();
+//console.log(graph1.DFSRecursive());
+console.log(graph1.DFSIterative());
 // let graph2 = new GraphMatrix(4,4);
 // graph2.addEdge(1,2);
 // graph2.addEdge(2,1);
@@ -59,4 +82,4 @@ graph1.DFSRecursive();
 // graph2.addEdge(3,1);
 // graph2.addEdge(3,4);
 // graph2.addEdge(4,3);
-// graph2.DFSRecursive();
+// console.log(graph2.DFSIterative());
