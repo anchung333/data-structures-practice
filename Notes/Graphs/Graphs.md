@@ -1,0 +1,38 @@
+### Graphs
+  - undirected: unordered pairs
+  - directed: ordered pairs of vertices and edges (connection/path between verticesk) (a,b and b,a are distinct relationships)
+  - adjacency matrix:
+    - n x n matrix that for each coordinate contains a 1 if there exists an edge, 0 if not
+    - good for sparse graphs
+    - faster to find if edge (x,y) exists (O(1) operation)...would have to go through linked list/array to find edge in list
+    - undirected: could slice matrix in half (diagonally) and make sure i < j when checking if edge exists...if not just swap to find (ie if asking if (3,1) exists, just look at (1,3) and see if edge exists)
+  - adjacency lists:
+    - want to know 'where can i go next' in a graph from a point
+    - have for each vertex set of neighbors; can be represented in an array or an object (with .neighbors property containing array of neighbors)
+    - alternative: have array that for each element contains a linked list that points to all the neighbors
+    - faster for finding how many connections/neighbors a node has (just return size of array of neighbors, or go through linked list (degree of node) which will usually be smaller than going through the matrix of size n * n)
+    - usually lists are faster/preferred. 
+  - converting from matrix to list: 
+    - nested for loop that will insert edge if exists into correct slot. O(1) whether linked list or array represented for neighbors for each vertex
+  - BFS explores all nodes reachable from a node. 
+    - achieve O(vertices + edges)
+    - look at everything reachable in 0, 1, 2...etc moves. 
+    - avoid revisiting vertices
+    - have a 'frontier' - nodes in current level to visit; iterate through frontier and look at neighbors to add to next.
+    - next storage will eventually turn into frontier; add nodes that haven't already been visited to next.
+    - also have a level storage representing number of moves out from current node to ensure you don't revisit nodes/levels; each time see new node set to current level + 1 and add to next
+    - loop will stop when there's no next and thus when frontier becomes empty
+    - parent storage allows for backwards traversal to root node...allow for shortest path tracing (uses fewest edges);
+      - parent of v node -> parent of parent -> ... s node. this path is shortest path from s to v
+      - levels tells distance of shortest path. 
+    - connected components: separate nodes that have no connection
+      - importance: algorithm won't try to waste time trying to find edge between connected components
+  - DFS
+    - often used to explore whole graph as opposed to BFS (layer-by-layer for reaching node V from node S)
+    - recursively explore graph, backtracking if necessary
+    - start at a vertex; if not in parent storage, call visit to recursively visit everything from that node and everything connected to it.
+    - edge classification: 
+      - tree edge: visit new vertex as a result
+      - forward edges: goes from root to descendent (travelling down to the 'tree'/to a child)
+      - backward edges: goes from descendent to an ancestor/parent
+      - cross edges: 
