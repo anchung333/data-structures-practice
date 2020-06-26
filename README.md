@@ -857,7 +857,7 @@ Graphs can be used to represent many problems in computer science, so this secti
     - [X] DFS with adjacency list (iterative with stack)
     - [X] DFS with adjacency matrix (recursive)
     - [X] DFS with adjacency matrix (iterative with stack)
-    - [ ] BFS with adjacency list
+    - [X] BFS with adjacency list
     - [ ] BFS with adjacency matrix
     - [ ] single-source shortest path (Dijkstra)
     - [ ] minimum spanning tree
